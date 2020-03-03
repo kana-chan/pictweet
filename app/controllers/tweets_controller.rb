@@ -6,7 +6,7 @@ before_action :move_to_index, except:[:index, :show]
 
 # normal action
   def index
-    @tweets = Tweet.all
+    @tweets = Tweet.includes(:user).order("created_at DESC")
   end
 
   def new
@@ -37,6 +37,6 @@ before_action :move_to_index, except:[:index, :show]
 
 private
   def tweet_params
-    params.require(:tweet).permit(:name, :text, :image)
+    params.require(:tweet).permit(:text, :image).merge(user_id: current_user.id)
   end
 end
