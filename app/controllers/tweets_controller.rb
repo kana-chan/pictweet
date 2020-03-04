@@ -6,7 +6,7 @@ before_action :move_to_index, except:[:index, :show]
 
 # normal action
   def index
-    @tweets = Tweet.includes(:user).order("created_at DESC")
+    @tweets = Tweet.includes(:user).order("created_at DESC").page(params[:page]).per(5)
   end
 
   def new
